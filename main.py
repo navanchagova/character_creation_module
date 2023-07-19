@@ -1,7 +1,24 @@
+"""
+Модуль main.py запускает игру, в которой пользователь вводит свое имя
+- char_name, выбирает своего персонажа - char_class.
+Далее пользователь выбирает одну из команд:
+атаковать противника/ защищаться /использовать суперсилу.
+В данном модуле подключена функция run_screensaver из пользовательского модуля
+для отображения интерактивной заставки перед началом игры.
+"""
+__author__ = 'N'
+
 from random import randint
 
+from graphic_arts.start_game_banner import run_screensaver
 
-def attack(char_name, char_class):
+
+def attack(char_name, char_class) -> str:
+    """
+    Функция attact вычисляет,
+    какой урон игрок нанес своему противнику
+    в зависимости от char_class игрока, который он выбрал в игре.
+    """
     if char_class == 'warrior':
         return (f'{char_name} нанёс урон противнику равный'
                 f'{5 + randint(3, 5)}')
@@ -14,7 +31,12 @@ def attack(char_name, char_class):
     return (f'{char_name} , ты не ввел команду')
 
 
-def defence(char_name, char_class):
+def defence(char_name, char_class) -> str:
+    """
+    Функция defence вычисляет,
+    сколько урона блокировал игрок
+    в зависимости от char_class игрока, который он выбрал в игре.
+    """
     if char_class == 'warrior':
         return (f'{char_name} блокировал {10 + randint(5, 10)} урона')
     if char_class == 'mage':
@@ -24,7 +46,11 @@ def defence(char_name, char_class):
     return (f'{char_name} ты не ввел команду ')
 
 
-def special(char_name, char_class):
+def special(char_name, char_class) -> str:
+    """
+    Функция special показывет, какую суперсилу применил игрок
+    от char_class игрока, который он выбрал в игре.
+    """
     if char_class == 'warrior':
         return (f'{char_name} применил специальное умение «Выносливость'
                 f'{80 + 25}»')
@@ -34,9 +60,16 @@ def special(char_name, char_class):
     if char_class == 'healer':
         return (f'{char_name} применил специальное умение «Защита'
                 f'{10 + 30}»')
+    return choice_char_class()
 
 
-def start_training(char_name, char_class):
+def start_training(char_name, char_class) -> str:
+    """
+    Функция start_training запускает процесс игры:
+    описывает выбранного персонажа и предлагает выбрать одну из комманд:
+    атаковать противника/ защищаться /использовать суперсилу.
+    Также данная функцией можно остановить игру.
+    """
     if char_class == 'warrior':
         print(f'{char_name}, ты Воитель — отличный боец ближнего боя.')
     if char_class == 'mage':
@@ -60,7 +93,11 @@ def start_training(char_name, char_class):
     return 'Тренировка окончена.'
 
 
-def choice_char_class():
+def choice_char_class() -> str:
+    """
+    Функция choice_char_class запускает процесс игры:
+    игрок выбирает персонажа и подтвержает свой выбор.
+    """
     approve_choice = None
     char_class = None
     while approve_choice != 'y':
@@ -79,19 +116,17 @@ def choice_char_class():
         approve_choice = input('Нажми (Y), чтобы подтвердить выбор, '
                                'или любую другую кнопку,'
                                'чтобы выбрать другого персонажа ').lower()
-    return char_class
+    return start_training(char_name, char_class)
 
 
-def main():
+if __name__ == '__main__':
+    run_screensaver()
     print('Приветствую тебя, искатель приключений!')
     print('Прежде чем начать игру...')
-    char_name = input('...назови себя: ')
+    char_name: str = input('...назови себя: ')
     print(f'Здравствуй, {char_name}! '
           'Сейчас твоя выносливость — 80, атака — 5 и защита — 10.')
     print('Ты можешь выбрать один из трёх путей силы:')
     print('Воитель, Маг, Лекарь')
-    char_class = choice_char_class()
+    char_class: str = choice_char_class()
     print(start_training(char_name, char_class))
-
-
-main()
